@@ -1,0 +1,29 @@
+def dina_initialer(namn):
+
+    if not namn:
+        return 'inga initialer'
+
+    namn = namn.replace('-', ' ')
+
+    initialer = []
+    firstname_surname = namn.split()
+    for namn in firstname_surname:
+        namn_uppdelat=namn.split()
+        letters_i_uppdelat=list(namn)
+        initialer+=letters_i_uppdelat[0]
+    initialer=(".".join(initialer))
+    return initialer
+
+
+def test():
+    namn_1 = "Rickard Anner"
+    namn_2 = "0"
+    namn_3 = "Lars Karl Rickard Anner"
+    namn_4 = "Karl-Henrik 2 Anner"
+    namn_5 = "Nina Jonson Franzén"
+    namn_6 = "Lars var löverfors"
+    alla_namn = [namn_1,namn_2,namn_3,namn_4,namn_5, namn_6]
+    for namn in alla_namn:
+        print ("detta namn har initialerna:", dina_initialer(namn))
+
+test()
