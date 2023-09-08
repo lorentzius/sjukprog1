@@ -1,0 +1,59 @@
+from inlupp3 import bubblesort
+import random
+import time
+
+#SKAPA LISTOR AV OLIKA STORLEKAR FÖR ATT KUNNA JÄMFÖRA SORTERINGSVERKTYGEN
+kort_lista=[random.randint(1,1000) for _ in range(100)]
+medel_long_lista=[random.randint(1,1000) for _ in range(450)]
+long_lista=[random.randint(1,1000) for _ in range(1000)]
+
+#KOLLA HUR LÅNG TID DET TAR FÖR BUBBEL OCH SORT ATT GENOMFÖRA DEN KORTA LISTAN
+start_tid_kort_bubbel=time.time()
+bubblesort(kort_lista)
+stopp_tid_kort_bubbel=time.time()
+tid_kort_bubbel=stopp_tid_kort_bubbel-start_tid_kort_bubbel
+print("För bubblesort tog den korta listan med längden", len(kort_lista),"tog det", tid_kort_bubbel, "sekunder att sortera")
+
+start_tid_kort_sort=time.perf_counter()
+kort_lista.sort()
+stopp_tid_kort_sort=time.perf_counter()
+tid_kort_sort=stopp_tid_kort_sort-start_tid_kort_sort
+print("Medan det tog", tid_kort_sort, "sekunder för sort metoden")
+if tid_kort_sort>tid_kort_bubbel:
+    print("Det gick snabbare att sortera elementen med bubblesort\n")
+else:
+    print("Det gick snabbare att sortera elementen med sort metoden\n")
+
+#KOLLA HUR LÅNG TID DET TAR FÖR BUBBEL OCH SORT ATT GENOMFÖRA DEN MEDEL LONG LISTAN
+start_tid_medel_bubbel=time.time()
+bubblesort(medel_long_lista)
+stopp_tid_medel_bubbel=time.time()
+tid_medel_bubbel=stopp_tid_medel_bubbel-start_tid_medel_bubbel
+print("För bubblesort tog den medel långa listan med längden",len(medel_long_lista), "tog det", tid_medel_bubbel, "sekunder att genomföra")
+
+start_tid_medel_sort=time.perf_counter()
+medel_long_lista.sort()
+stopp_tid_medel_sort=time.perf_counter()
+tid_medel_sort=stopp_tid_medel_sort-start_tid_medel_sort
+print("Medan det tog", tid_medel_sort, "sekunder för sort metoden")
+if tid_medel_sort>tid_medel_bubbel:
+    print("Det gick snabbare att sortera elementen med bubblesort\n")
+else:
+    print("Det gick snabbare att sortera elementen med sort metoden\n")
+
+#KOLLA HUR LÅNG TID DET TAR FÖR BUBBEL OCH SORT ATT GENOMFÖRA DEN LONG LISTAN
+start_tid_long_bubbel=time.time()
+bubblesort(long_lista)
+stopp_tid_long_bubbel=time.time()
+tid_long_bubbel=stopp_tid_long_bubbel-start_tid_long_bubbel
+print("För bubblesort tog den långa listan med längden",len(long_lista),tid_long_bubbel, "sekunder att genomföra")
+
+start_tid_long_sort=time.perf_counter()
+long_lista.sort()
+stopp_tid_long_sort=time.perf_counter()
+tid_long_sort=stopp_tid_long_sort-start_tid_long_sort
+print("Medan det tog", tid_long_sort, "sekunder för sort metoden")
+if tid_long_sort>tid_long_bubbel:
+    print("Det gick snabbare att sortera elementen med bubblesort\n")
+else:
+    print("Det gick snabbare att sortera elementen med sort metoden\n")
