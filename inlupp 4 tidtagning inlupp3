@@ -4,7 +4,7 @@ import time
 
 #SKAPA LISTOR AV OLIKA STORLEKAR FÖR ATT KUNNA JÄMFÖRA SORTERINGSVERKTYGEN
 kort_lista=[random.randint(1,1000) for _ in range(100)]
-medel_long_lista=[random.randint(1,1000) for _ in range(450)]
+medel_long_lista=[random.randint(1,1000) for _ in range(450)] # Mannen va är det för namn https://www.youtube.com/shorts/_OoB_O8Dgf4
 long_lista=[random.randint(1,1000) for _ in range(1000)]
 
 #KOLLA HUR LÅNG TID DET TAR FÖR BUBBEL OCH SORT ATT GENOMFÖRA DEN KORTA LISTAN
