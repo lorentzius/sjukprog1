@@ -1,29 +1,39 @@
 package Labb1;
 
-public class bubblesort {
-    public static void main(String[] args) {
-        int[] lista = new int[] {1,2,3,4};
-        System.out.println(bubbleSort(lista));
-    }
+public class BubbleSort {
 
-    static boolean bytIntill(int[] lista) {
+
+    public static void main(String[] args) {
+
+        int[] arr = {1,3,3,2,5,1,0,3,2,1,3,4,56,7,2,2,2,2,1,1,1,1,1,1,1,1,1,55,};
+        bubbleSort(arr);
+        // Print all elements in the array
+        System.out.print("[");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
+            System.out.print(i == arr.length-1 ? "]" : ","); // Ternary operator, mega java skills lär dig detta bror as lätt men big flex
+        }
+
+
+    }
+    static boolean swap(int[] array) {
         boolean change = false;
-        for (int i = 0; i < lista.length-1; i++) {
-            if (lista[i] > lista[i+1]) {
-                int during = lista[i];
-                lista[i] = lista[i + 1];
-                lista[i + 1] = during;
+        // Iterate through the array, comparing i to i+1. If the element after i is larger, swap i and i+1.
+        for (int i = 0; i < array.length-1; i++) {
+            if (array[i] > array[i+1]) {
+                // Swap
+                int temporary = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temporary;
                 change = true;
             }
         }
+        // Return value, if a swap has happened.
         return change;
     }
 
-    static int[] bubbleSort (int[] lista) {
-        int count = 0;
-        while (bytIntill(lista)) {
-            count++;
-        }
-        return lista;
+    static void bubbleSort (int[] array) {
+        // Keep swapping elements until there are none left to swap. Then the array is sorted.
+        while (swap(array));
     }
 }
