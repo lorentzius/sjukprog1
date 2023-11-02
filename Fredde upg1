@@ -1,0 +1,152 @@
+package Labb2;
+import java.util.Random;
+
+public class Upg1 {
+    public static void main(String[] args) {
+
+        int k = 100; //antal byar
+        boolean vaccinated = true;
+        System.out.println("Antal döda i snitt per by:");
+        System.out.println(calculateVillage(k, vaccinated));
+    }
+
+    static double calculateVillage(int k, boolean vaccinated) {
+        double mean = 0;
+        for (int i=0; i<k; i++) {
+            Village village = new Village(vaccinated);
+
+            while (village.countSick() > 0) {
+                village.dayPassesAll();
+                }
+            int deathcount = village.countDead();
+            mean += deathcount;
+            }
+        mean = mean/k;
+        return mean;
+    }
+}
+    class Village {
+        private final int SIZE = 1000;
+        private Person[] population;
+        private boolean isVaccinated;
+        int dayPassed=0;
+
+        public Village(boolean isVaccinated) {
+            this.isVaccinated = isVaccinated;
+            population = new Person[SIZE];
+            for (int i = 0; i < SIZE; i++) {
+                this.population[i] = new Person(isVaccinated);
+            }
+        }
+
+        boolean isVaccinated() {
+            return isVaccinated;
+        }
+
+        public int countSick() {
+            int count = 0;
+            for (Person p : this.population) {
+                if (p.getIsSick()) {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public void dayPassesAll() {
+            for (Person p : this.population) {
+                p.dayPassess(this.population);
+            }
+        }
+        public int countRecovered() {
+            int count = 0;
+            for (Person p: this.population) {
+                if(p.getIsSick()){
+                    count++;
+                }
+            }
+            return count;
+        }
+        int countDead(){
+            int count = 0;
+            for (Person p:this.population){
+                if(p.getIsDead()) {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+
+        class Person {
+
+            final double INIT_SICK_PROB = 0.5; //konstant del1 (sannolikhet ny person blir sjuk)
+            final double GET_WELL_PROB = 0.5; // konstant del2 (sannolikhet bli frisk under en dag)
+            final double DIE_PROB = 0.1; // konstant del3 (sannolikhet avlider under varje dag)
+            double INFECT_PROB = 0.2;
+            final double VACCINE_PROB = 0.8;
+            final double VACCINE_EFF = 0.9;
+            Random rand = new Random(); // definierar random
+            double xPos = rand.nextDouble()*1000;
+            double yPos = rand.nextDouble()*1000;
+            final double RANGE = 1000;
+            final int DAYS_IMMUNE = 10;
+
+            boolean isSick; //Instansvariabel
+            boolean isDead; //Instansvariabel
+            int daysLeftImmune = 0;
+            boolean isVaccinated;
+
+            Person(boolean isVaccinated) {
+                this.isVaccinated = isVaccinated;
+                if (isVaccinated){
+                    INFECT_PROB = (INFECT_PROB*(1-VACCINE_EFF))/(VACCINE_PROB);
+                }
+                if (Math.random()<INIT_SICK_PROB) {
+                    isSick = true;
+                }
+            }
+            void dayPassess(Person[] allPersons) {
+                if(isSick){
+                    if(Math.random()<GET_WELL_PROB) {
+                        isSick = false;
+                        daysLeftImmune=DAYS_IMMUNE;
+                    }
+                    else if (Math.random()<DIE_PROB){
+                            isDead=true;
+                            isSick=false;
+                    }
+                    for (Person p: allPersons){
+                        if(p!=this){
+                            infect(p);
+                        }
+                    }
+                }
+                else if(daysLeftImmune!=0){
+                    daysLeftImmune --;
+                }
+            }
+            void becomesInfected() {
+                if(daysLeftImmune==0 && !isDead && Math.random() < INFECT_PROB) {
+                    isSick=true;
+                }
+            }
+
+            void infect(Person victim) {
+                if ((Math.sqrt(Math.pow(xPos-victim.xPos,2)+Math.pow(yPos-victim.yPos,2))) < RANGE){
+                victim.becomesInfected();
+                }
+            }
+
+            public boolean getIsSick() {
+                return this.isSick;
+            }
+            public boolean getIsDead() {
+                return this.isDead;
+            }
+        }
+
+
+
+
+
